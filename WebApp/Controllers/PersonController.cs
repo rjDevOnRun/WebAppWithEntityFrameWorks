@@ -26,6 +26,7 @@ namespace WebApp.Controllers
 
         #region Class Methods
 
+        [HttpGet]
         public IActionResult Index()
         {
             IEnumerable<Person> people = _db.Person;
@@ -43,10 +44,13 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Person person)
         {
-            _db.Person.Add(person);
-            _db.SaveChanges();
-
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.Person.Add(person);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(person);
         }
 
         #endregion
