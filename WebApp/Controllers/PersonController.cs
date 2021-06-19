@@ -53,6 +53,70 @@ namespace WebApp.Controllers
             return View(person);
         }
 
+        // GET - Edit Person
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+            
+            var personToEdit = _db.Person.Find(id);
+            if(personToEdit == null)
+            {
+                return NotFound();
+            }
+
+            return View(personToEdit);
+        }
+
+        // POST - Edit Person
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Person person)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Person.Update(person);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(person);
+        }
+
+        // GET - Delete Person
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var personToEdit = _db.Person.Find(id);
+            if (personToEdit == null)
+            {
+                return NotFound();
+            }
+
+            return View(personToEdit);
+        }
+
+        // POST - Delete Person
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var person = _db.Person.Find(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            _db.Person.Remove(person);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         #endregion
     }
 }

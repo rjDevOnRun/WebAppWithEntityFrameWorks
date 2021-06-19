@@ -1,8 +1,5 @@
 ﻿@model WebApp.Models.Person
 
-@{
-    ViewData["Title"] = "Create";
-}
 
 @*We need a POST method of Create to pass this form data to...  *@
 <form method="post" asp-action="Create">
@@ -79,6 +76,7 @@
         </div>
     </div>
 
+     @* This is client side validations *@
     @section Scripts{ 
     @{ <partial name="_ValidationScriptsPartial" />}
     }
