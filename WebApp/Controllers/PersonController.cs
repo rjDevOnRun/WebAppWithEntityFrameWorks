@@ -38,6 +38,17 @@ namespace WebApp.Controllers
             return View();
         }
 
+        // POST - Create Person
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Person person)
+        {
+            _db.Person.Add(person);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         #endregion
     }
 }
